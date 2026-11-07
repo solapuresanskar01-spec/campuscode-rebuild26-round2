@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f7f7f4">
+    <meta name="description" content="Join CampusCode to discover hackathons, build teams and compete with student developers.">
+    <title>Create an account — CampusCode</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/register.css">
+    <script src="js/register.js" defer></script>
+  </head>
+  <body class="register-page">
+    <main class="register-shell">
+      <section class="register-brand" aria-labelledby="register-brand-title">
+        <div class="register-brand__top">
+          <a class="register-brand__logo" href="index.html" aria-label="CampusCode home">
+            <img src="assets/images/campuscode-logo.png" alt="CampusCode">
+          </a>
+          <a class="register-brand__back mono" href="index.html"><span aria-hidden="true">←</span> BACK TO HOME</a>
+        </div>
+
+        <div class="register-brand__intro">
+          <p class="eyebrow">CAMPUSCODE / REGISTRATION</p>
+          <h1 id="register-brand-title">JOIN THE<br><span>ARENA.</span></h1>
+          <p class="register-brand__description">Turn your ideas into real-world opportunities. Discover hackathons, build teams and showcase what you can create.</p>
+        </div>
+
+        <ol class="register-features" aria-label="What you can do on CampusCode">
+          <li>
+            <span class="register-features__number mono">01</span>
+            <div><h2>DISCOVER</h2><p>Find hackathons that match your interests and skills.</p></div>
+            <span class="register-features__arrow" aria-hidden="true">↗</span>
+          </li>
+          <li>
+            <span class="register-features__number mono">02</span>
+            <div><h2>COLLABORATE</h2><p>Connect with developers and create teams.</p></div>
+            <span class="register-features__arrow" aria-hidden="true">↗</span>
+          </li>
+          <li>
+            <span class="register-features__number mono">03</span>
+            <div><h2>COMPETE</h2><p>Build projects, solve problems and showcase your skills.</p></div>
+            <span class="register-features__arrow" aria-hidden="true">↗</span>
+          </li>
+        </ol>
+
+        <div class="register-art" aria-hidden="true">
+          <div class="register-art__grid"></div>
+          <div class="register-art__orbit register-art__orbit--outer"></div>
+          <div class="register-art__orbit register-art__orbit--inner"></div>
+          <div class="register-art__cross register-art__cross--horizontal"></div>
+          <div class="register-art__cross register-art__cross--vertical"></div>
+          <div class="register-art__tile"><span>CC</span></div>
+          <div class="register-art__dot register-art__dot--purple"></div>
+          <div class="register-art__dot register-art__dot--lime"></div>
+          <span class="register-art__label register-art__label--top mono">FIELD NOTES / 026</span>
+          <span class="register-art__label register-art__label--bottom mono">CREATE. CONNECT. COMPETE.</span>
+        </div>
+
+        <div class="register-brand__footer mono">
+          <span>YOUR JOURNEY STARTS HERE</span>
+          <span>CC / 026 <b>↗</b></span>
+        </div>
+      </section>
+
+      <section class="register-form-panel" aria-labelledby="register-form-title">
+        <div class="register-form-panel__top mono">
+          <span>BUILDER PROFILE</span>
+          <span>STEP 01 / 01</span>
+        </div>
+
+        <div class="register-card">
+          <p class="eyebrow register-card__eyebrow"><span></span> START SOMETHING GOOD</p>
+          <h2 id="register-form-title">CREATE ACCOUNT<span>.</span></h2>
+          <p class="register-card__description">Join CampusCode and start building your next opportunity.</p>
+
+          <form class="register-form" id="register-form" novalidate>
+            <div class="register-field">
+              <div class="register-field__heading">
+                <label for="register-name"><span class="mono">01</span> FULL NAME</label>
+              </div>
+              <div class="register-input-wrap">
+                <img class="register-input-icon" src="assets/icons/contact-round.png" alt="" data-icon>
+                <svg class="register-input-icon-fallback" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <circle cx="9" cy="8" r="3.3"></circle><path d="M3 19c.5-3.1 2.7-5 6-5s5.5 1.9 6 5"></path><path d="M16 5.2a3.1 3.1 0 0 1 0 5.9M18 14c1.7.7 2.7 2.3 3 5"></path>
+                </svg>
+                <input id="register-name" name="name" type="text" autocomplete="name" placeholder="Enter your full name" aria-describedby="name-error" required>
+              </div>
+              <span class="register-field__error" id="name-error"></span>
+            </div>
+
+            <div class="register-field">
+              <div class="register-field__heading">
+                <label for="register-email"><span class="mono">02</span> EMAIL ADDRESS</label>
+              </div>
+              <div class="register-input-wrap">
+                <img class="register-input-icon" src="assets/icons/mail.png" alt="" data-icon>
+                <svg class="register-input-icon-fallback" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path>
+                </svg>
+                <input id="register-email" name="email" type="email" autocomplete="email" placeholder="Enter your email address" aria-describedby="email-error" required>
+              </div>
+              <span class="register-field__error" id="email-error"></span>
+            </div>
+
+            <div class="register-field">
+              <div class="register-field__heading">
+                <label for="register-college"><span class="mono">03</span> COLLEGE / INSTITUTION</label>
+              </div>
+              <div class="register-input-wrap">
+                <img class="register-input-icon" src="assets/icons/graduation-cap.png" alt="" data-icon>
+                <svg class="register-input-icon-fallback" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="m2 9 10-5 10 5-10 5L2 9Z"></path><path d="M6 11v5c3.5 3 8.5 3 12 0v-5M22 9v6"></path>
+                </svg>
+                <input id="register-college" name="college" type="text" autocomplete="organization" placeholder="Enter your college name" aria-describedby="college-error" required>
+              </div>
+              <span class="register-field__error" id="college-error"></span>
+            </div>
+
+            <div class="register-field">
+              <div class="register-field__heading">
+                <label for="register-password"><span class="mono">04</span> PASSWORD</label>
+                <span class="register-field__meta mono">MIN. 8 CHARACTERS</span>
+              </div>
+              <div class="register-input-wrap register-input-wrap--password">
+                <img class="register-input-icon" src="assets/icons/lock-keyhole.png" alt="" data-icon>
+                <svg class="register-input-icon-fallback" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <rect x="4" y="10" width="16" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 1 1 8 0v3"></path><path d="M12 14v3"></path>
+                </svg>
+                <input id="register-password" name="password" type="password" autocomplete="new-password" placeholder="Create a password" aria-describedby="password-error password-requirements" required>
+                <button class="register-password-toggle" type="button" aria-label="Show password" aria-pressed="false" data-password-toggle="password">
+                  <img src="assets/icons/eye.png" alt="" data-password-icon="show">
+                  <img src="assets/icons/eye-off.png" alt="" data-password-icon="hide">
+                </button>
+              </div>
+              <span class="register-field__error" id="password-error"></span>
+              <ul class="password-requirements" id="password-requirements" aria-label="Password requirements">
+                <li data-password-rule="length"><span aria-hidden="true"></span>8+ characters</li>
+                <li data-password-rule="uppercase"><span aria-hidden="true"></span>One uppercase letter</li>
+                <li data-password-rule="lowercase"><span aria-hidden="true"></span>One lowercase letter</li>
+                <li data-password-rule="number"><span aria-hidden="true"></span>One number</li>
+              </ul>
+            </div>
+
+            <div class="register-field">
+              <div class="register-field__heading">
+                <label for="register-confirm"><span class="mono">05</span> CONFIRM PASSWORD</label>
+              </div>
+              <div class="register-input-wrap register-input-wrap--password">
+                <img class="register-input-icon" src="assets/icons/lock-keyhole.png" alt="" data-icon>
+                <svg class="register-input-icon-fallback" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <rect x="4" y="10" width="16" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 1 1 8 0v3"></path><path d="M12 14v3"></path>
+                </svg>
+                <input id="register-confirm" name="confirmPassword" type="password" autocomplete="new-password" placeholder="Re-enter your password" aria-describedby="confirm-error" required>
+                <button class="register-password-toggle" type="button" aria-label="Show confirm password" aria-pressed="false" data-password-toggle="confirm">
+                  <img src="assets/icons/eye.png" alt="" data-password-icon="show">
+                  <img src="assets/icons/eye-off.png" alt="" data-password-icon="hide">
+                </button>
+              </div>
+              <span class="register-field__error" id="confirm-error"></span>
+            </div>
+
+            <div class="register-captcha">
+              <div class="register-captcha__heading">
+                <label for="register-captcha-input">Security check <span class="mono">/ 06</span></label>
+                <span class="register-captcha__hint mono">DEMO CHECK</span>
+              </div>
+              <div class="register-captcha__display-row">
+                <div class="register-captcha__display" role="img" aria-label="Generated five-digit demo security code" data-captcha-display>
+                  <div class="register-captcha__digits" data-captcha-digits></div>
+                  <span class="register-captcha__stamp mono" aria-hidden="true">CC / VERIFY</span>
+                </div>
+                <button class="register-captcha__refresh" type="button" aria-label="Refresh security code" data-captcha-refresh>
+                  <img src="assets/icons/refresh-cw.png" alt="" data-icon>
+                  <svg class="register-input-icon-fallback" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M20 7v5h-5"></path><path d="M4.9 9a8 8 0 0 1 13.2-2L20 12M4 17v-5h5"></path><path d="M19.1 15a8 8 0 0 1-13.2 2L4 12"></path>
+                  </svg>
+                </button>
+              </div>
+              <label class="register-captcha__instruction" for="register-captcha-input">Enter the five-digit security code.</label>
+              <input class="register-captcha__input" id="register-captcha-input" name="captcha" type="text" inputmode="numeric" autocomplete="off" placeholder="Enter five digits" maxlength="5" pattern="[0-9]{5}" aria-describedby="captcha-error captcha-disclaimer" required>
+              <span class="register-field__error" id="captcha-error"></span>
+              <p class="register-captcha__disclaimer" id="captcha-disclaimer">Frontend demo only — this code is not protection against automated attacks.</p>
+            </div>
+
+            <div class="register-terms">
+              <input id="register-terms" name="terms" type="checkbox" aria-label="I agree to the Terms & Conditions and Privacy Policy." aria-describedby="terms-error" required>
+              <label class="register-terms__copy" for="register-terms">I agree to the</label>
+              <a href="#terms-details" data-policy-link>Terms &amp; Conditions</a>
+              <span>and</span>
+              <a href="#privacy-details" data-policy-link>Privacy Policy</a>
+              <span>.</span>
+              <img class="register-terms__icon" src="assets/icons/shield-check.png" alt="" data-icon>
+              <svg class="register-terms__icon-fallback" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"></path><path d="m9 12 2 2 4-4"></path>
+              </svg>
+            </div>
+            <span class="register-field__error register-terms__error" id="terms-error"></span>
+
+            <p class="register-feedback" role="alert" aria-live="assertive" data-form-error></p>
+            <p class="register-success" role="status" aria-live="polite" data-form-success></p>
+            <button class="register-submit" type="submit" data-submit-button>
+              <span data-submit-label>CREATE MY ACCOUNT</span>
+              <span class="register-submit__arrow" aria-hidden="true">→</span>
+            </button>
+          </form>
+
+          <div class="register-card__login">
+            <p>Already have an account?</p>
+            <a href="login.html">SIGN IN <span aria-hidden="true">→</span></a>
+          </div>
+
+          <div class="register-policies">
+            <details id="terms-details">
+              <summary>Terms &amp; Conditions <img src="assets/icons/external-link.png" alt="" data-icon></summary>
+              <p>This frontend demonstration does not create an account or submit personal details. By continuing with the demo, you acknowledge that no registration service is connected.</p>
+            </details>
+            <details id="privacy-details">
+              <summary>Privacy Policy <img src="assets/icons/external-link.png" alt="" data-icon></summary>
+              <p>Form data stays in this browser preview and is not sent to a server. A production account flow would need a published privacy notice and secure data handling.</p>
+            </details>
+          </div>
+        </div>
+
+        <div class="register-form-panel__footer mono">
+          <span>CREATE. CONNECT. COMPETE.</span>
+          <span>FRONTEND PREVIEW / NO ACCOUNT DATA SENT</span>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
