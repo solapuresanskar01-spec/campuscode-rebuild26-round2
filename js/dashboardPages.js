@@ -264,7 +264,7 @@
       ${pageHeader("05", "BUILDER RECORD", "Keep the work that matters.", "Explore certificate layouts as demonstration samples. They are not verified awards or records of attendance.")}
       <div class="certificate-overview"><div><span class="mono">SAMPLE CERTIFICATES</span><strong>03</strong><small>DEMO ONLY / NO VERIFIED AWARDS</small></div><p>Use the preview to inspect the print layout. No award information is stored as an official record.</p></div>
       <div class="certificate-grid">${certificates.map((item, index) => `<article class="certificate-item"><div class="certificate-item__mini"><span class="mono">SAMPLE / 0${index + 1}</span><strong>${escapeHTML(item.title)}</strong><span>NOT VERIFIED</span></div><div class="certificate-item__copy"><p class="eyebrow">${escapeHTML(item.date)}</p><h2>${escapeHTML(item.title)}</h2><p>${escapeHTML(item.note)}</p><div><button type="button" class="text-action" data-certificate-preview="${item.id}">PREVIEW <span aria-hidden="true">↗</span></button><button type="button" class="text-action" data-certificate-print="${item.id}">PRINT <span aria-hidden="true">→</span></button></div></div></article>`).join("")}</div>
-      <dialog class="page-dialog" data-certificate-dialog aria-labelledby="certificate-dialog-title"><div class="page-dialog__head"><p class="mono">SAMPLE CERTIFICATE / NOT VERIFIED</p><button type="button" aria-label="Close preview" data-dialog-close>×</button></div><div data-certificate-preview-content></div><div class="page-dialog__actions"><button type="button" class="dashboard-button" data-certificate-print-current>PRINT SAMPLE</button><button type="button" class="dashboard-button dashboard-button--secondary" data-dialog-close>CLOSE</button></div></dialog>
+      <dialog class="page-dialog" data-certificate-dialog aria-labelledby="certificate-dialog-title"><div class="page-dialog__head"><p class="mono" id="certificate-dialog-title">SAMPLE CERTIFICATE / NOT VERIFIED</p><button type="button" aria-label="Close preview" data-dialog-close>×</button></div><div data-certificate-preview-content></div><div class="page-dialog__actions"><button type="button" class="dashboard-button" data-certificate-print-current>PRINT SAMPLE</button><button type="button" class="dashboard-button dashboard-button--secondary" data-dialog-close>CLOSE</button></div></dialog>
     `;
   }
 
@@ -307,7 +307,7 @@
       <div class="collaborator-list-head mono"><span>BUILDER / DEMO PROFILE</span><span>SKILLS / INTERESTS</span><span><span data-collaborator-count>00 SUGGESTED</span> / COLLABORATION</span></div>
       <section class="collaborator-list" data-collaborator-results></section>
       <p class="data-disclaimer mono">SIMULATED SUGGESTIONS / NO MESSAGES ARE SENT AND NO STUDENT DIRECTORY IS CONNECTED.</p>
-      <dialog class="page-dialog page-dialog--compact" data-collaborator-dialog><div class="page-dialog__head"><p class="mono">DEMO BUILDER PROFILE</p><button type="button" aria-label="Close profile" data-dialog-close>×</button></div><div data-collaborator-preview-content></div></dialog>
+      <dialog class="page-dialog page-dialog--compact" data-collaborator-dialog aria-labelledby="collaborator-dialog-title"><div class="page-dialog__head"><p class="mono" id="collaborator-dialog-title">DEMO BUILDER PROFILE</p><button type="button" aria-label="Close profile" data-dialog-close>×</button></div><div data-collaborator-preview-content></div></dialog>
     `;
   }
 
@@ -490,17 +490,17 @@
     state.route = routeId;
     const renderPage = renderers[routeId];
     if (!renderPage) return "";
-    const html = renderPage();
-    window.requestAnimationFrame(() => {
-      if (routeId === "events") window.setTimeout(renderEventList, 260);
-      if (routeId === "hackmate") renderCollaborators();
-      if (routeId === "rulebot") renderRulebotResults();
-      if (routeId === "student-guide") renderGuideItems();
-      if (routeId === "communications") renderCommunicationList();
-      if (routeId === "notifications") renderNotificationList();
-      if (routeId === "support") renderSupportResults();
-    });
-    return html;
+    return renderPage();
+  }
+
+  function afterRender(routeId) {
+    if (routeId === "events") renderEventList();
+    if (routeId === "hackmate") renderCollaborators();
+    if (routeId === "rulebot") renderRulebotResults();
+    if (routeId === "student-guide") renderGuideItems();
+    if (routeId === "communications") renderCommunicationList();
+    if (routeId === "notifications") renderNotificationList();
+    if (routeId === "support") renderSupportResults();
   }
 
   function toggleRegistration(id) {
@@ -523,8 +523,19 @@
       state.callbacks.showToast("DEMO REGISTRATION SAVED IN THIS BROWSER");
     }
     if (writeStorage(keys.registrations, registrations)) {
-      if (state.route === "events") render("events");
-      if (state.route === "my-events") render("my-events");
+      if (state.route === "events") {
+        document.querySelectorAll("[data-event-register]").forEach((button) => {
+          if (button.dataset.eventRegister === id) {
+            button.innerHTML = `${eventIsRegistered(id) ? "REGISTRATION SAVED" : "REGISTER INTEREST"} <span aria-hidden="true">→</span>`;
+          }
+        });
+        renderEventList();
+      }
+      if (state.route === "my-events") {
+        const page = document.querySelector("#route-page");
+        page.innerHTML = render("my-events");
+        afterRender("my-events");
+      }
     }
   }
 
@@ -861,6 +872,7 @@
   window.CampusCodeDashboardPages = {
     init,
     render,
+    afterRender,
     handleClick,
     handleSubmit,
     handleInput,

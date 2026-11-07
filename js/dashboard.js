@@ -24,8 +24,10 @@
   let pointerX = -100;
   let pointerY = -100;
   let cursorVisible = false;
+  let cursorInteractionsEnabled = false;
   const cursor = document.querySelector("[data-cursor]");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 
   function showToast(message) {
     toast.textContent = message;
@@ -129,6 +131,7 @@
     const route = routes[routeId];
     routePage.dataset.routeId = routeId;
     routePage.innerHTML = pages.render(routeId);
+    pages.afterRender(routeId);
     observeImages();
   }
 
@@ -223,47 +226,84 @@
     cursor.classList.toggle("is-visible", visible);
   }
 
-  function enableCursorInteractions() {
-    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
-    if (!finePointer.matches || reducedMotion.matches) return;
-    cursor.hidden = false;
-    document.body.classList.add("has-cursor-follower");
+  function handleCursorMove(event) {
+    pointerX = event.clientX;
+    pointerY = event.clientY;
+    setCursorVisibility(true);
+    if (!pointerFrame) pointerFrame = window.requestAnimationFrame(updateCursor);
 
-    document.addEventListener("pointermove", (event) => {
-      pointerX = event.clientX;
-      pointerY = event.clientY;
-      setCursorVisibility(true);
-      if (!pointerFrame) pointerFrame = window.requestAnimationFrame(updateCursor);
+    const magnetic = event.target.closest("[data-magnetic]");
+    if (magnetic) {
+      const bounds = magnetic.getBoundingClientRect();
+      const dx = (event.clientX - (bounds.left + bounds.width / 2)) / bounds.width;
+      const dy = (event.clientY - (bounds.top + bounds.height / 2)) / bounds.height;
+      magnetic.style.setProperty("--mag-x", `${Math.max(-3, Math.min(3, dx * 5))}px`);
+      magnetic.style.setProperty("--mag-y", `${Math.max(-3, Math.min(3, dy * 5))}px`);
+    }
+  }
 
-      const magnetic = event.target.closest("[data-magnetic]");
-      if (magnetic) {
-        const bounds = magnetic.getBoundingClientRect();
-        const dx = (event.clientX - (bounds.left + bounds.width / 2)) / bounds.width;
-        const dy = (event.clientY - (bounds.top + bounds.height / 2)) / bounds.height;
-        magnetic.style.setProperty("--mag-x", `${Math.max(-3, Math.min(3, dx * 5))}px`);
-        magnetic.style.setProperty("--mag-y", `${Math.max(-3, Math.min(3, dy * 5))}px`);
-      }
-    }, { passive: true });
+  function handleCursorOver(event) {
+    const interactive = event.target.closest("a, button, input, select, textarea, summary, [role='button']");
+    cursor.classList.toggle("is-interactive", Boolean(interactive));
+  }
 
-    document.addEventListener("pointerover", (event) => {
-      const interactive = event.target.closest("a, button, input, select, textarea, summary, [role='button']");
-      cursor.classList.toggle("is-interactive", Boolean(interactive));
+  function handleCursorOut(event) {
+    if (!event.relatedTarget) setCursorVisibility(false);
+    const magnetic = event.target.closest?.("[data-magnetic]");
+    if (magnetic && !magnetic.contains(event.relatedTarget)) {
+      magnetic.style.removeProperty("--mag-x");
+      magnetic.style.removeProperty("--mag-y");
+    }
+    if (!event.relatedTarget?.closest("a, button, input, select, textarea, summary, [role='button']")) {
+      cursor.classList.remove("is-interactive");
+    }
+  }
+
+  function handleWindowBlur() {
+    setCursorVisibility(false);
+  }
+
+  function handlePointerDown() {
+    cursor.classList.add("is-pressed");
+  }
+
+  function handlePointerUp() {
+    cursor.classList.remove("is-pressed");
+  }
+
+  function updateCursorInteractions() {
+    const shouldEnable = finePointer.matches && !reducedMotion.matches;
+    if (shouldEnable === cursorInteractionsEnabled) return;
+    cursorInteractionsEnabled = shouldEnable;
+
+    if (shouldEnable) {
+      cursor.hidden = false;
+      document.body.classList.add("has-cursor-follower");
+      document.addEventListener("pointermove", handleCursorMove, { passive: true });
+      document.addEventListener("pointerover", handleCursorOver);
+      document.addEventListener("pointerout", handleCursorOut);
+      document.addEventListener("pointerdown", handlePointerDown);
+      document.addEventListener("pointerup", handlePointerUp);
+      window.addEventListener("blur", handleWindowBlur);
+      return;
+    }
+
+    document.removeEventListener("pointermove", handleCursorMove);
+    document.removeEventListener("pointerover", handleCursorOver);
+    document.removeEventListener("pointerout", handleCursorOut);
+    document.removeEventListener("pointerdown", handlePointerDown);
+    document.removeEventListener("pointerup", handlePointerUp);
+    window.removeEventListener("blur", handleWindowBlur);
+    if (pointerFrame) window.cancelAnimationFrame(pointerFrame);
+    pointerFrame = 0;
+    cursor.hidden = true;
+    cursor.classList.remove("is-interactive", "is-pressed");
+    setCursorVisibility(false);
+    document.body.classList.remove("has-cursor-follower");
+    document.querySelectorAll("[data-magnetic]").forEach((element) => {
+      element.style.removeProperty("--mag-x");
+      element.style.removeProperty("--mag-y");
     });
-
-    document.addEventListener("pointerout", (event) => {
-      if (!event.relatedTarget) setCursorVisibility(false);
-      const magnetic = event.target.closest?.("[data-magnetic]");
-      if (magnetic && !magnetic.contains(event.relatedTarget)) {
-        magnetic.style.removeProperty("--mag-x");
-        magnetic.style.removeProperty("--mag-y");
-      }
-      if (!event.relatedTarget?.closest("a, button, input, select, textarea, summary, [role='button']")) {
-        cursor.classList.remove("is-interactive");
-      }
-    });
-    window.addEventListener("blur", () => setCursorVisibility(false));
-    document.addEventListener("pointerdown", () => cursor.classList.add("is-pressed"));
-    document.addEventListener("pointerup", () => cursor.classList.remove("is-pressed"));
   }
 
   function observeImages() {
@@ -421,5 +461,7 @@
   if (isOverviewAnchor && initialHash !== "overview") {
     initialAnchor.scrollIntoView({ block: "start" });
   }
-  enableCursorInteractions();
+  updateCursorInteractions();
+  reducedMotion.addEventListener("change", updateCursorInteractions);
+  finePointer.addEventListener("change", updateCursorInteractions);
 })();

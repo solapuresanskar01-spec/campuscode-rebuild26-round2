@@ -179,7 +179,11 @@
   cursor: pointer;
   font-family: var(--dash-mono) !important;
   font-size: 8px !important;
-  transition: border-color .2s ease, background .2s ease, color .2s ease;
+  transition: border-color .2s ease, background .2s ease, color .2s ease, transform .2s ease;
+}
+
+.dashboard-filter:hover {
+  transform: translateY(-1px);
 }
 
 .dashboard-filter:hover,
@@ -2465,7 +2469,7 @@
   border-radius: 50%;
   opacity: 0;
   pointer-events: none;
-  transition: width .18s ease, height .18s ease, opacity .18s ease, border-color .18s ease;
+  transition: width .18s ease, height .18s ease, opacity .18s ease, border-color .18s ease, transform 70ms linear;
   will-change: transform;
 }
 

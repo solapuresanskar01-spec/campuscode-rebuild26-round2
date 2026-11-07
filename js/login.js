@@ -165,14 +165,8 @@ loginForm?.addEventListener("submit", (event) => {
 
   window.clearTimeout(submitTimer);
   submitTimer = window.setTimeout(() => {
-    submitButton.disabled = false;
-    submitButton.classList.remove("is-loading");
-    submitButton.removeAttribute("aria-busy");
-    if (submitLabel) submitLabel.textContent = "SIGN IN TO CAMPUSCODE";
-    if (formSuccess) {
-      formSuccess.textContent = "Demo sign-in complete. Authentication isn't connected, and no account data was sent.";
-      formSuccess.classList.add("is-visible");
-    }
+    window.sessionStorage.setItem("campuscodeDemoLoggedIn", "true");
+    window.location.href = "./student/dashboard.html#overview";
   }, 750);
 });
 

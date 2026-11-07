@@ -56,7 +56,7 @@
 }
 
 .register-brand__back:hover {
-  color: var(--purple);
+  color: #6253dc;
 }
 
 .register-brand__back span {
@@ -130,7 +130,7 @@
 .register-features__number {
   align-self: start;
   padding-top: 1.05rem;
-  color: var(--purple);
+  color: #6253dc;
   font-size: 0.61rem;
 }
 
@@ -362,7 +362,7 @@
 
 .register-field__heading > label > span {
   margin-right: 0.4rem;
-  color: var(--purple);
+  color: #6253dc;
   font-size: 0.58rem;
   font-weight: 400;
 }
@@ -764,7 +764,7 @@
 }
 
 .register-terms > a {
-  color: var(--purple);
+  color: #6253dc;
   font-weight: 600;
   text-decoration: underline;
   text-decoration-color: rgb(118 101 255 / 35%);
@@ -897,7 +897,7 @@
 }
 
 .register-card__login > a:hover {
-  color: var(--purple);
+  color: #6253dc;
 }
 
 .register-card__login > a span {
@@ -933,7 +933,7 @@
 }
 
 .register-policies summary:hover {
-  color: var(--purple);
+  color: #6253dc;
 }
 
 .register-policies summary img {

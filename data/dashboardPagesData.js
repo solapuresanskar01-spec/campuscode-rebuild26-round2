@@ -66,7 +66,7 @@ window.CampusCodePageData = {
     { id: "team-size", category: "Teams", question: "Can I participate individually?", answer: "The ReBuild '26 demonstration listing allows an individual or team path. Other event formats may differ; use each event's own requirements." },
     { id: "team-change", category: "Teams", question: "Can I change my team later?", answer: "Team-change windows depend on the organiser. This local preview cannot update a real registration; check the event brief before making plans." },
     { id: "submission", category: "Submissions", question: "What should a project submission include?", answer: "A typical demo submission describes the problem, solution, team contribution, and a working prototype or walkthrough. Follow the event-specific submission checklist." },
-    { id: "original-work", category: "Conduct", question: "What counts as original work?", answer: "Follow the event's authorship and tool-use policy. Be transparent about borrowed assets, external services, and AI assistance, and credit work that is not yours." },
+    { id: "original-work", category: "Conduct", question: "What counts as original work?", answer: "The organizers have confirmed AI coding assistance and generated code may be used freely, without the previous 40% restriction. Review and understand your submission, and follow any other applicable event rules. Credit borrowed work and assets where required." },
     { id: "support", category: "Support", question: "Where do I ask an event question?", answer: "Use the Help & Support page in this demo to practise the request flow. It does not send a message; consult the organiser's official event page for real support." }
   ],
   guide: [

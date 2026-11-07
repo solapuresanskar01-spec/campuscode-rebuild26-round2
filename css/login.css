@@ -53,7 +53,7 @@
 }
 
 .brand-panel__back:hover {
-  color: var(--purple);
+  color: #6253dc;
 }
 
 .brand-panel__back span {
@@ -488,15 +488,8 @@
 }
 
 .forgot-link {
-  color: var(--purple);
-  font-size: 0.72rem;
-  font-weight: 600;
-}
-
-.forgot-link:hover {
-  color: var(--ink);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  color: var(--muted);
+  font-size: 0.66rem;
 }
 
 .captcha {
@@ -701,7 +694,6 @@
 .login-submit:focus-visible,
 .captcha-refresh:focus-visible,
 .password-toggle:focus-visible,
-.forgot-link:focus-visible,
 .login-card__register a:focus-visible,
 .brand-panel__back:focus-visible {
   outline: 2px solid var(--purple);
@@ -762,7 +754,7 @@
 }
 
 .login-card__register a:hover {
-  color: var(--purple);
+  color: #6253dc;
 }
 
 .login-card__register a span {

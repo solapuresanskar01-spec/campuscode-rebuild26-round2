@@ -26,3 +26,7 @@ The mobile menu, scroll reveals, hover/focus states, and decorative motion use n
 `student/dashboard.html` is a frontend-only workspace with a shared sidebar, header, and hash routes: `#overview`, `#events`, `#my-events`, `#profile`, `#digital-id`, `#certificates`, `#hackmate`, `#ideacheck`, `#rulebot`, `#student-guide`, `#communications`, `#notifications`, and `#support`. Existing Overview section links such as `#journey` and `#opportunities` remain in-page anchors.
 
 The Overview is in `student/dashboard.html`; `css/dashboard.css` and `js/dashboard.js` provide the shared shell. `data/dashboardPagesData.js`, `js/dashboardPages.js`, and `css/dashboard-pages.css` provide page-specific examples, rendering, interactions, and layouts. Student identity, events, collaborators, certificates, announcements, and AI-adjacent tools are demonstration content. Profile edits, notification state, and event registrations can persist in browser local storage only. No account service, live event listing, AI model, or support endpoint is connected.
+
+## AI assistance and contribution record
+
+The organizers have confirmed that AI coding assistance and AI-generated code may be used freely, with no previous 40% restriction. AI assistance was used to generate and revise portions of this frontend, including dashboard routes and styles. The team should review, understand, test, and integrate all submitted code and follow any other applicable competition rules.
