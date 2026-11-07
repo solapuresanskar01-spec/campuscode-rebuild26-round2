@@ -1,32 +1,31 @@
 (() => {
   const data = window.CampusCodeMockData;
-  if (!data) {
-    throw new Error("CampusCode dashboard mock data failed to load.");
+  const pages = window.CampusCodeDashboardPages;
+  if (!data || !pages) {
+    throw new Error("CampusCode dashboard data or page module failed to load.");
   }
 
-  const iconPath = (filename) => `../assets/icons/${filename}`;
-  const student = data.student;
-  const toast = document.querySelector("[data-toast]");
-  const dialog = document.querySelector("[data-preview-dialog]");
+  const routes = data.dashboardRoutes;
+  const shell = document.querySelector(".dashboard-shell");
+  const sidebar = document.querySelector("#student-sidebar");
+  const sidebarToggle = document.querySelector("[data-sidebar-toggle]");
+  const sidebarScrim = document.querySelector("[data-sidebar-scrim]");
   const notificationPanel = document.querySelector("#notification-panel");
+  const toast = document.querySelector("[data-toast]");
+  const routePage = document.querySelector("#route-page");
+  const overviewView = document.querySelector('[data-route-view="overview"]');
+  const dashboardDialog = document.querySelector("[data-dashboard-dialog]");
+  const refreshButton = document.querySelector("[data-refresh]");
+  const refreshIcon = refreshButton.querySelector("img");
+  const refreshLoader = document.querySelector("[data-refresh-loader]");
   let toastTimer;
-
-  const previewContent = {
-    hackmate: ["04 / HACKMATE AI", "Find your future build team.", "HackMate AI will help students discover collaborators. This is a frontend-only preview; team matching is not connected."],
-    ideacheck: ["05 / IDEACHECK AI", "Give your idea a first test.", "IdeaCheck AI is planned as a space to challenge early ideas. This frontend preview does not run an AI evaluation."],
-    certificates: ["06 / CERTIFICATES", "A place for what you earn.", "Certificates will be available here when that dashboard section is implemented. No real certificates are shown in this mock."],
-    "digital-id": ["07 / DIGITAL ID", "Your student identity, in one place.", "Digital ID is not connected to a student account in this frontend demonstration."],
-    rulebot: ["08 / RULEBOT AI", "Make the rules easier to navigate.", "RuleBot AI is a planned event-guidance preview. It does not interpret real event rules yet."],
-    "student-guide": ["09 / STUDENT GUIDE", "A useful start for builders.", "The Student Guide section has not been built in this frontend preview."],
-    communication: ["10 / OFFICIAL COMMUNICATION", "Updates from CampusCode.", "Official communications are not connected in this mock workspace."],
-    community: ["COMMUNITY / COLLABORATE", "Build better, together.", "Community discovery is not part of this Overview preview yet. The panel is intentionally shown as a placeholder, not a live directory."],
-    support: ["12 / HELP & SUPPORT", "Get help when you need it.", "Help & Support is not connected in this frontend-only dashboard preview."],
-    profile: ["13 / STUDENT PROFILE", "Your builder identity.", "This page uses a mock student identity. Profile editing and account data are not connected."],
-    events: ["02 / EVENTS", "Find the right challenge.", "Event discovery will be available in the Events section. The radar on this Overview is illustrative mock content."],
-    "events-ai": ["EVENT RADAR / 01", "Artificial intelligence.", "This is a mock opportunity category. Live event listings and registration are not connected."],
-    "events-web": ["EVENT RADAR / 02", "Web development.", "This is a mock opportunity category. Live event listings and registration are not connected."],
-    "events-smart-tech": ["EVENT RADAR / 03", "Smart technology.", "This is a mock opportunity category. Live event listings and registration are not connected."]
-  };
+  let refreshTimer;
+  let pointerFrame = 0;
+  let pointerX = -100;
+  let pointerY = -100;
+  let cursorVisible = false;
+  const cursor = document.querySelector("[data-cursor]");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   function showToast(message) {
     toast.textContent = message;
@@ -53,6 +52,15 @@
     `).join("");
   }
 
+  function setJourneyStage(stageId) {
+    const stage = data.journey.stages.find((item) => item.id === stageId);
+    if (!stage) return;
+    document.querySelectorAll("[data-journey-stage]").forEach((button) => {
+      button.setAttribute("aria-pressed", String(button.dataset.journeyStage === stageId));
+    });
+    document.querySelector("[data-journey-stage-detail]").textContent = stage.detail;
+  }
+
   function renderJourney() {
     const journey = data.journey;
     const track = document.querySelector("[data-journey-track]");
@@ -60,7 +68,7 @@
     const progress = document.createElement("span");
     progress.className = "journey-track__progress";
     progress.setAttribute("aria-hidden", "true");
-    progress.style.width = `${Math.max(0, currentIndex) * 25}%`;
+    progress.style.width = `${Math.max(0, currentIndex) * (100 / (journey.stages.length - 1))}%`;
     track.append(progress);
 
     journey.stages.forEach((stage, index) => {
@@ -79,19 +87,10 @@
     setJourneyStage(journey.currentStage);
   }
 
-  function setJourneyStage(stageId) {
-    const stage = data.journey.stages.find((item) => item.id === stageId);
-    if (!stage) return;
-    document.querySelectorAll("[data-journey-stage]").forEach((button) => {
-      button.setAttribute("aria-pressed", String(button.dataset.journeyStage === stageId));
-    });
-    document.querySelector("[data-journey-stage-detail]").textContent = stage.detail;
-  }
-
   function renderToolkit() {
     document.querySelector("[data-toolkit]").innerHTML = data.tools.map((tool) => `
-      <a class="toolkit-item" href="#${tool.id}" data-preview="${tool.id}" aria-label="${tool.name}: ${tool.description} Frontend preview">
-        <span class="toolkit-item__icon"><img src="${iconPath(tool.icon)}" alt="" loading="lazy"></span>
+      <a class="toolkit-item" href="#${tool.id}" data-route-link="${tool.id}" aria-label="${tool.name}: ${tool.description}">
+        <span class="toolkit-item__icon"><img src="../assets/icons/${tool.icon}" alt="" loading="lazy"></span>
         <span class="toolkit-item__copy"><strong>${tool.name}</strong><span>${tool.description}</span></span>
         <span class="toolkit-item__arrow" aria-hidden="true">↗</span>
       </a>
@@ -102,21 +101,22 @@
     document.querySelector("[data-activity]").innerHTML = data.activity.map((item) => `
       <li class="signal-item">
         <time>${item.time}</time>
-        <span class="signal-item__mark signal-item__mark--${item.tone}"><img src="${iconPath(item.icon)}" alt="" loading="lazy"></span>
+        <span class="signal-item__mark signal-item__mark--${item.tone}"><img src="../assets/icons/${item.icon}" alt="" loading="lazy"></span>
         <span class="signal-item__copy"><strong>${item.title}</strong><p>${item.detail}</p></span>
       </li>
     `).join("");
   }
 
   function renderNotifications() {
-    document.querySelector("[data-notification-list]").innerHTML = data.notifications.map((item) => `
+    const notifications = pages.getNotifications();
+    document.querySelector("[data-notification-list]").innerHTML = notifications.length ? notifications.slice(0, 3).map((item) => `
       <article class="notification-item${item.unread ? "" : " is-read"}">
         <span class="notification-item__dot" aria-hidden="true"></span>
         <strong>${item.title}</strong>
         <time>${item.time}</time>
       </article>
-    `).join("");
-    const unreadCount = data.notifications.filter((item) => item.unread).length;
+    `).join("") : '<p class="notification-panel__note">No local demonstration notifications.</p>';
+    const unreadCount = notifications.filter((item) => item.unread).length;
     const count = document.querySelector("[data-notification-count]");
     const sideCount = document.querySelector("[data-sidebar-notification-count]");
     count.textContent = String(unreadCount);
@@ -125,82 +125,165 @@
     sideCount.hidden = unreadCount === 0;
   }
 
-  function renderRadar() {
-    const titleCopy = [
-      "Intelligence<br>with intention.",
-      "Build for the<br>open web.",
-      "Make the everyday<br>smarter."
-    ];
+  function renderRoutePage(routeId) {
+    const route = routes[routeId];
+    routePage.dataset.routeId = routeId;
+    routePage.innerHTML = pages.render(routeId);
+    observeImages();
+  }
 
-    data.opportunities.forEach((opportunity, index) => {
-      const label = document.querySelector(`[data-radar-label="${index}"]`);
-      const title = document.querySelector(`[data-radar-title="${index}"]`);
-      const description = document.querySelector(`[data-radar-description="${index}"]`);
-      if (label) {
-        label.textContent = `${opportunity.number} / ${opportunity.name}`;
+  function setActiveNavigation(routeId) {
+    document.querySelectorAll("[data-nav-link]").forEach((link) => {
+      const active = link.dataset.routeLink === routeId;
+      link.classList.toggle("is-active", active);
+      if (active) {
+        link.setAttribute("aria-current", "page");
+      } else {
+        link.removeAttribute("aria-current");
       }
-      if (title) {
-        title.innerHTML = titleCopy[index];
-      }
-      if (description) {
-        description.textContent = opportunity.description;
-      }
-      const link = index === 0
-        ? document.querySelector(".radar-lead")
-        : document.querySelectorAll(".radar-row")[index - 1];
-      link.dataset.preview = `events-${opportunity.id}`;
-      link.href = `#events-${opportunity.id}`;
-      link.setAttribute("aria-label", `${opportunity.name}: open mock opportunity preview`);
     });
   }
 
-  function openPreview(id) {
-    const content = previewContent[id] ?? ["CAMPUSCODE / PREVIEW", "This section is not live yet.", "This destination is a clear frontend placeholder. No account data or backend service is connected."];
-    document.querySelector("[data-preview-number]").textContent = content[0];
-    document.querySelector("[data-preview-title]").textContent = content[1];
-    document.querySelector("[data-preview-description]").textContent = content[2];
-    if (typeof dialog.showModal === "function") {
-      dialog.showModal();
-    } else {
-      showToast(`${content[1]} — FRONTEND PREVIEW`);
-    }
-  }
-
-  function setActiveNavigation(link) {
-    document.querySelectorAll("[data-nav-link]").forEach((item) => {
-      item.classList.remove("is-active");
-      item.removeAttribute("aria-current");
-    });
-    if (link) {
-      link.classList.add("is-active");
-      link.setAttribute("aria-current", "page");
-    }
-  }
-
-  const shell = document.querySelector(".dashboard-shell");
-  const menuToggle = document.querySelector("[data-sidebar-toggle]");
-
-  function closeSidebar() {
+  function closeSidebar({ restoreFocus = false } = {}) {
     shell.classList.remove("is-sidebar-open");
-    menuToggle.setAttribute("aria-expanded", "false");
-    document.querySelector("[data-sidebar-scrim]").hidden = true;
+    sidebarToggle.setAttribute("aria-expanded", "false");
+    sidebarScrim.hidden = true;
+    if (restoreFocus) {
+      window.requestAnimationFrame(() => sidebarToggle.focus({ preventScroll: true }));
+    }
   }
 
-  function toggleNotifications(force) {
-    const shouldOpen = typeof force === "boolean" ? force : notificationPanel.hidden;
-    notificationPanel.hidden = !shouldOpen;
+  function setNotificationPanel(open) {
+    notificationPanel.hidden = !open;
     document.querySelectorAll("[data-open-notifications]").forEach((button) => {
-      button.setAttribute("aria-expanded", String(shouldOpen));
+      button.setAttribute("aria-expanded", String(open));
+    });
+  }
+
+  function renderRoute({ scroll = true, routeId = window.location.hash.slice(1) } = {}) {
+    if (!Object.hasOwn(routes, routeId)) return false;
+
+    const route = routes[routeId];
+    const isOverview = routeId === "overview";
+    overviewView.hidden = !isOverview;
+    routePage.hidden = isOverview;
+    document.querySelector("[data-page-title]").textContent = route.label.toUpperCase();
+    document.title = `${route.label} — CampusCode Student Workspace`;
+    setActiveNavigation(routeId);
+    closeSidebar();
+    setNotificationPanel(false);
+
+    if (!isOverview) {
+      renderRoutePage(routeId);
+    }
+
+    const activeView = isOverview ? overviewView : routePage;
+    activeView.classList.remove("is-entering");
+    window.requestAnimationFrame(() => activeView.classList.add("is-entering"));
+
+    if (scroll) {
+      window.scrollTo({ top: 0, behavior: reducedMotion.matches ? "auto" : "smooth" });
+      activeView.querySelector("h1, h2")?.focus({ preventScroll: true });
+    }
+    return true;
+  }
+
+  function goToRoute(routeId) {
+    if (!Object.hasOwn(routes, routeId)) return;
+    if (window.location.hash === `#${routeId}`) {
+      renderRoute();
+    } else {
+      window.location.hash = routeId;
+    }
+  }
+
+  function beginRefresh() {
+    refreshButton.classList.add("is-refreshing");
+    refreshButton.setAttribute("aria-busy", "true");
+    refreshIcon.hidden = true;
+    refreshLoader.hidden = false;
+    showToast("LOCAL PREVIEW / NOTHING TO SYNC");
+    window.clearTimeout(refreshTimer);
+    refreshTimer = window.setTimeout(() => {
+      refreshButton.classList.remove("is-refreshing");
+      refreshButton.removeAttribute("aria-busy");
+      refreshIcon.hidden = false;
+      refreshLoader.hidden = true;
+    }, 650);
+  }
+
+  function updateCursor() {
+    pointerFrame = 0;
+    cursor.style.transform = `translate3d(${pointerX - 12.5}px, ${pointerY - 12.5}px, 0)`;
+  }
+
+  function setCursorVisibility(visible) {
+    if (cursorVisible === visible) return;
+    cursorVisible = visible;
+    cursor.classList.toggle("is-visible", visible);
+  }
+
+  function enableCursorInteractions() {
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+    if (!finePointer.matches || reducedMotion.matches) return;
+    cursor.hidden = false;
+    document.body.classList.add("has-cursor-follower");
+
+    document.addEventListener("pointermove", (event) => {
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+      setCursorVisibility(true);
+      if (!pointerFrame) pointerFrame = window.requestAnimationFrame(updateCursor);
+
+      const magnetic = event.target.closest("[data-magnetic]");
+      if (magnetic) {
+        const bounds = magnetic.getBoundingClientRect();
+        const dx = (event.clientX - (bounds.left + bounds.width / 2)) / bounds.width;
+        const dy = (event.clientY - (bounds.top + bounds.height / 2)) / bounds.height;
+        magnetic.style.setProperty("--mag-x", `${Math.max(-3, Math.min(3, dx * 5))}px`);
+        magnetic.style.setProperty("--mag-y", `${Math.max(-3, Math.min(3, dy * 5))}px`);
+      }
+    }, { passive: true });
+
+    document.addEventListener("pointerover", (event) => {
+      const interactive = event.target.closest("a, button, input, select, textarea, summary, [role='button']");
+      cursor.classList.toggle("is-interactive", Boolean(interactive));
+    });
+
+    document.addEventListener("pointerout", (event) => {
+      if (!event.relatedTarget) setCursorVisibility(false);
+      const magnetic = event.target.closest?.("[data-magnetic]");
+      if (magnetic && !magnetic.contains(event.relatedTarget)) {
+        magnetic.style.removeProperty("--mag-x");
+        magnetic.style.removeProperty("--mag-y");
+      }
+      if (!event.relatedTarget?.closest("a, button, input, select, textarea, summary, [role='button']")) {
+        cursor.classList.remove("is-interactive");
+      }
+    });
+    window.addEventListener("blur", () => setCursorVisibility(false));
+    document.addEventListener("pointerdown", () => cursor.classList.add("is-pressed"));
+    document.addEventListener("pointerup", () => cursor.classList.remove("is-pressed"));
+  }
+
+  function observeImages() {
+    document.querySelectorAll("img").forEach((image) => {
+      if (image.dataset.assetObserved) return;
+      image.dataset.assetObserved = "true";
+      image.addEventListener("error", () => {
+        image.dataset.assetError = "true";
+        image.setAttribute("aria-label", "CampusCode interface image unavailable");
+      }, { once: true });
     });
   }
 
   document.querySelectorAll("[data-student-name]").forEach((element) => {
-    element.textContent = student.name;
+    element.textContent = data.student.name;
   });
   document.querySelectorAll("[data-student-initials]").forEach((element) => {
-    element.textContent = student.initials;
+    element.textContent = data.student.initials;
   });
-  document.querySelector("[data-first-name]").textContent = student.name.split(" ")[0].toUpperCase();
+  document.querySelector("[data-first-name]").textContent = data.student.name.split(" ")[0].toUpperCase();
   document.querySelector("[data-workspace-year]").textContent = String(data.workspace.year);
   document.querySelector("[data-current-year]").textContent = String(new Date().getFullYear());
   document.querySelector("[data-workspace-status]").textContent = data.workspace.status;
@@ -209,44 +292,43 @@
   document.querySelector("[data-journey-participation]").textContent = data.journey.participation;
   document.querySelector("[data-journey-team]").textContent = data.journey.teamName;
   document.querySelector("[data-journey-event-status]").textContent = `${data.journey.eventStatus} / MOCK`;
+  pages.init({
+    showToast,
+    refreshNotifications: renderNotifications,
+    goToRoute
+  });
   renderMetrics();
   renderJourney();
   renderToolkit();
   renderActivity();
   renderNotifications();
-  renderRadar();
+  observeImages();
 
   document.addEventListener("click", (event) => {
-    const previewLink = event.target.closest("[data-preview]");
-    if (previewLink) {
+    if (pages.handleClick(event)) return;
+
+    const routeLink = event.target.closest("[data-route-link]");
+    if (routeLink) {
       event.preventDefault();
-      openPreview(previewLink.dataset.preview);
-      closeSidebar();
+      goToRoute(routeLink.dataset.routeLink);
       return;
     }
 
     const navLink = event.target.closest("[data-nav-link]");
     if (navLink) {
-      setActiveNavigation(navLink);
       closeSidebar();
-      if (navLink.dataset.section === "my-events") {
-        showToast("CURRENT JOURNEY / MOCK EVENT PREVIEW");
-      }
-      if (navLink.dataset.section === "events") {
-        showToast("OPPORTUNITY RADAR / MOCK EVENT CATEGORIES");
-      }
       return;
     }
 
     if (event.target.closest("[data-open-notifications]")) {
-      toggleNotifications();
+      setNotificationPanel(notificationPanel.hidden);
       return;
     }
 
     if (event.target.closest("[data-mark-notifications]")) {
-      data.notifications.forEach((item) => { item.unread = false; });
+      pages.markAllNotificationsRead();
       renderNotifications();
-      showToast("MOCK NOTIFICATIONS MARKED AS READ");
+      showToast("DEMO NOTIFICATIONS MARKED AS READ");
       return;
     }
 
@@ -259,59 +341,85 @@
     if (event.target.closest("[data-sidebar-toggle]")) {
       const open = !shell.classList.contains("is-sidebar-open");
       shell.classList.toggle("is-sidebar-open", open);
-      menuToggle.setAttribute("aria-expanded", String(open));
-      document.querySelector("[data-sidebar-scrim]").hidden = !open;
+      sidebarToggle.setAttribute("aria-expanded", String(open));
+      sidebarScrim.hidden = !open;
+      if (open) sidebar.querySelector("a")?.focus();
       return;
     }
 
     if (event.target.closest("[data-sidebar-close], [data-sidebar-scrim]")) {
-      closeSidebar();
+      closeSidebar({ restoreFocus: true });
       return;
     }
 
     if (event.target.closest("[data-refresh]")) {
-      const button = event.target.closest("[data-refresh]");
-      button.classList.remove("is-refreshing");
-      window.requestAnimationFrame(() => button.classList.add("is-refreshing"));
-      showToast(`WORKSPACE REFRESHED / ${new Intl.DateTimeFormat("en", { hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date())}`);
-      window.setTimeout(() => button.classList.remove("is-refreshing"), 750);
+      beginRefresh();
+      return;
+    }
+
+    if (event.target.closest("[data-logout]")) {
+      event.preventDefault();
+      if (typeof dashboardDialog.showModal === "function") dashboardDialog.showModal();
+      else showToast("DEMO SESSION / RETURN TO LOGIN");
+      return;
+    }
+
+    if (event.target.closest("[data-dialog-close]")) {
+      dashboardDialog.close();
       return;
     }
 
     if (!event.target.closest(".notification-wrap")) {
-      toggleNotifications(false);
+      setNotificationPanel(false);
     }
+  });
+
+  document.addEventListener("submit", (event) => {
+    pages.handleSubmit(event);
+  });
+
+  document.addEventListener("input", (event) => {
+    pages.handleInput(event);
   });
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
-      toggleNotifications(false);
-      closeSidebar();
+      const notificationsOpen = !notificationPanel.hidden;
+      const sidebarOpen = shell.classList.contains("is-sidebar-open");
+      setNotificationPanel(false);
+      closeSidebar({ restoreFocus: sidebarOpen && !notificationsOpen });
+      if (notificationsOpen) {
+        document.querySelector("[data-open-notifications]").focus();
+      }
     }
   });
 
-  const sectionLinks = new Map([
-    ["overview", document.querySelector('[data-nav-link][data-section="overview"]')],
-    ["opportunities", document.querySelector('[data-nav-link][data-section="events"]')],
-    ["journey", document.querySelector('[data-nav-link][data-section="my-events"]')]
-  ]);
-  if ("IntersectionObserver" in window) {
-    const observer = new IntersectionObserver((entries) => {
-      const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (visible && sectionLinks.has(visible.target.id)) {
-        setActiveNavigation(sectionLinks.get(visible.target.id));
+  window.addEventListener("hashchange", () => {
+    if (renderRoute()) return;
+    const anchor = document.getElementById(window.location.hash.slice(1));
+    if (anchor && overviewView.contains(anchor)) {
+      if (overviewView.hidden) {
+        renderRoute({ scroll: false, routeId: "overview" });
+        window.requestAnimationFrame(() => anchor.scrollIntoView({
+          block: "start",
+          behavior: reducedMotion.matches ? "auto" : "smooth"
+        }));
       }
-    }, { rootMargin: "-25% 0px -65% 0px", threshold: [0, .2, .5] });
-    sectionLinks.forEach((_, id) => {
-      const section = document.getElementById(id);
-      if (section) observer.observe(section);
-    });
-  }
-
-  document.querySelectorAll("img").forEach((image) => {
-    image.addEventListener("error", () => {
-      image.dataset.assetError = "true";
-      image.setAttribute("aria-label", "CampusCode interface icon unavailable");
-    }, { once: true });
+      setActiveNavigation("overview");
+    } else {
+      goToRoute("overview");
+    }
   });
+
+  const initialHash = window.location.hash.slice(1);
+  const initialAnchor = document.getElementById(initialHash);
+  const isOverviewAnchor = initialAnchor && overviewView.contains(initialAnchor);
+  if (!routes[initialHash] && !isOverviewAnchor) {
+    window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}#overview`);
+  }
+  renderRoute({ scroll: false });
+  if (isOverviewAnchor && initialHash !== "overview") {
+    initialAnchor.scrollIntoView({ block: "start" });
+  }
+  enableCursorInteractions();
 })();

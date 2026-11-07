@@ -6,12 +6,12 @@
     <meta name="theme-color" content="#f7f7f4">
     <meta name="description" content="CampusCode student workspace overview. Find your next build, event and opportunity.">
     <title>Overview — CampusCode Student Workspace</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/dashboard-pages.css">
     <script src="../data/mockData.js" defer></script>
+    <script src="../data/dashboardPagesData.js" defer></script>
+    <script src="../js/dashboardPages.js" defer></script>
     <script src="../js/dashboard.js" defer></script>
   </head>
   <body class="dashboard-page">
@@ -29,57 +29,57 @@
 
         <nav class="sidebar-nav" aria-label="Dashboard sections">
           <p class="sidebar-nav__label mono">WORKSPACE</p>
-          <a class="sidebar-link is-active" href="#overview" aria-current="page" data-nav-link data-section="overview">
+          <a class="sidebar-link is-active" href="#overview" aria-current="page" data-nav-link data-route-link="overview">
             <img src="../assets/icons/layout-dashboard.png" alt=""><span>Overview</span><span class="sidebar-link__number mono">01</span>
           </a>
-          <a class="sidebar-link" href="#opportunities" data-nav-link data-section="events">
+          <a class="sidebar-link" href="#events" data-nav-link data-route-link="events">
             <img src="../assets/icons/calendar-days.png" alt=""><span>Events</span><span class="sidebar-link__number mono">02</span>
           </a>
-          <a class="sidebar-link" href="#journey" data-nav-link data-section="my-events">
+          <a class="sidebar-link" href="#my-events" data-nav-link data-route-link="my-events">
             <img src="../assets/icons/trophy.png" alt=""><span>My Events</span><span class="sidebar-link__number mono">03</span>
           </a>
-          <a class="sidebar-link" href="#hackmate" data-nav-link data-preview="hackmate">
+          <a class="sidebar-link" href="#hackmate" data-nav-link data-route-link="hackmate">
             <img src="../assets/icons/bot.png" alt=""><span>HackMate AI</span><span class="sidebar-link__number mono">04</span>
           </a>
-          <a class="sidebar-link" href="#ideacheck" data-nav-link data-preview="ideacheck">
+          <a class="sidebar-link" href="#ideacheck" data-nav-link data-route-link="ideacheck">
             <img src="../assets/icons/lightbulb.png" alt=""><span>IdeaCheck AI</span><span class="sidebar-link__number mono">05</span>
           </a>
-          <a class="sidebar-link" href="#certificates" data-nav-link data-preview="certificates">
+          <a class="sidebar-link" href="#certificates" data-nav-link data-route-link="certificates">
             <img src="../assets/icons/certificate.png" alt=""><span>Certificates</span><span class="sidebar-link__number mono">06</span>
           </a>
-          <a class="sidebar-link" href="#digital-id" data-nav-link data-preview="digital-id">
+          <a class="sidebar-link" href="#digital-id" data-nav-link data-route-link="digital-id">
             <img src="../assets/icons/qr-code.png" alt=""><span>Digital ID</span><span class="sidebar-link__number mono">07</span>
           </a>
-          <a class="sidebar-link" href="#rulebot" data-nav-link data-preview="rulebot">
+          <a class="sidebar-link" href="#rulebot" data-nav-link data-route-link="rulebot">
             <img src="../assets/icons/circle-question-mark.png" alt=""><span>RuleBot AI</span><span class="sidebar-link__number mono">08</span>
           </a>
-          <a class="sidebar-link" href="#student-guide" data-nav-link data-preview="student-guide">
+          <a class="sidebar-link" href="#student-guide" data-nav-link data-route-link="student-guide">
             <img src="../assets/icons/book-open.png" alt=""><span>Student Guide</span><span class="sidebar-link__number mono">09</span>
           </a>
 
           <p class="sidebar-nav__label sidebar-nav__label--second mono">CAMPUSCODE</p>
-          <a class="sidebar-link" href="#communication" data-nav-link data-preview="communication">
+          <a class="sidebar-link" href="#communications" data-nav-link data-route-link="communications">
             <img src="../assets/icons/megaphone.png" alt=""><span>Official Communication</span><span class="sidebar-link__number mono">10</span>
           </a>
-          <button class="sidebar-link sidebar-link--button" type="button" data-open-notifications>
+          <a class="sidebar-link" href="#notifications" data-nav-link data-route-link="notifications">
             <img src="../assets/icons/bell.png" alt=""><span>Notifications</span><span class="sidebar-link__number mono">11</span>
             <span class="sidebar-link__badge" data-sidebar-notification-count>03</span>
-          </button>
-          <a class="sidebar-link" href="#support" data-nav-link data-preview="support">
+          </a>
+          <a class="sidebar-link" href="#support" data-nav-link data-route-link="support">
             <img src="../assets/icons/circle-question-mark.png" alt=""><span>Help &amp; Support</span><span class="sidebar-link__number mono">12</span>
           </a>
-          <a class="sidebar-link" href="#profile" data-nav-link data-preview="profile">
+          <a class="sidebar-link" href="#profile" data-nav-link data-route-link="profile">
             <img src="../assets/icons/square-user-round.png" alt=""><span>Profile</span><span class="sidebar-link__number mono">13</span>
           </a>
         </nav>
 
         <div class="sidebar__account">
-          <a class="sidebar-account" href="#profile" data-preview="profile">
+          <a class="sidebar-account" href="#profile" data-route-link="profile">
             <span class="avatar avatar--sidebar" data-student-initials>SS</span>
             <span class="sidebar-account__copy"><strong data-student-name>Sanskar Solapure</strong><span class="mono">STUDENT</span></span>
             <img class="sidebar-account__menu" src="../assets/icons/ellipsis.png" alt="">
           </a>
-          <a class="sidebar-logout" href="../login.html">
+          <a class="sidebar-logout" href="../login.html" data-logout>
             <img src="../assets/icons/log-out.png" alt=""><span>Log out</span>
           </a>
         </div>
@@ -91,8 +91,8 @@
             <img src="../assets/icons/menu.png" alt="">
           </button>
           <div class="topbar__context">
-            <p class="topbar__crumb mono">CAMPUSCODE <span>/</span> STUDENT</p>
-            <p class="topbar__title">OVERVIEW</p>
+            <p class="topbar__crumb mono"><a href="#overview" data-route-link="overview">CAMPUSCODE</a> <span>/</span> STUDENT</p>
+            <p class="topbar__title" data-page-title>OVERVIEW</p>
           </div>
           <div class="topbar__actions">
             <div class="notification-wrap">
@@ -106,14 +106,18 @@
                   <button class="notification-panel__mark" type="button" data-mark-notifications>Mark all read</button>
                 </div>
                 <div class="notification-list" data-notification-list></div>
-                <p class="notification-panel__note mono">DEMO NOTIFICATIONS — NO LIVE ACCOUNT</p>
+                <div class="notification-panel__footer">
+                  <p class="notification-panel__note mono">DEMO NOTIFICATIONS — NO LIVE ACCOUNT</p>
+                  <a href="#notifications" data-route-link="notifications">OPEN NOTIFICATION CENTRE <span aria-hidden="true">→</span></a>
+                </div>
               </section>
             </div>
             <button class="icon-button refresh-button" type="button" aria-label="Refresh workspace" data-refresh>
               <img src="../assets/icons/refresh-cw.png" alt="">
+              <span class="build-loader" data-refresh-loader aria-hidden="true" hidden><i></i><i></i><i></i></span>
             </button>
             <span class="topbar__divider" aria-hidden="true"></span>
-            <button class="topbar-profile" type="button" data-preview="profile" aria-label="Open student profile preview">
+            <button class="topbar-profile" type="button" data-route-link="profile" aria-label="Open student profile">
               <span class="avatar avatar--top" data-student-initials>SS</span>
               <span class="topbar-profile__name" data-student-name>Sanskar Solapure</span>
               <img src="../assets/icons/square-chevron-down.png" alt="">
@@ -127,14 +131,15 @@
             <span class="overview__mock-label"><i></i> MOCK DATA / PREVIEW</span>
           </div>
 
+          <div class="overview-view" data-route-view="overview">
           <section class="welcome-hero" id="overview" aria-labelledby="welcome-title">
             <div class="welcome-hero__copy">
               <p class="eyebrow welcome-hero__eyebrow">WELCOME BACK, <span data-first-name>SANSKAR</span>.</p>
-              <h1 id="welcome-title">MAKE<br>SOMETHING<br><span>MATTER.</span></h1>
+              <h1 id="welcome-title" tabindex="-1">MAKE<br>SOMETHING<br><span>MATTER.</span></h1>
               <p class="welcome-hero__description">Your next build starts here. Discover opportunities, challenge your thinking and turn ideas into things people can use.</p>
               <div class="welcome-hero__status">
                 <span class="build-status"><i></i><span>STATUS: <strong data-workspace-status>READY TO BUILD</strong></span></span>
-                <a class="welcome-hero__jump" href="#next-move">FIND YOUR NEXT MOVE <span aria-hidden="true">↘</span></a>
+                <a class="welcome-hero__jump" href="#next-move" data-magnetic>FIND YOUR NEXT MOVE <span aria-hidden="true">↘</span></a>
               </div>
             </div>
 
@@ -178,13 +183,13 @@
                 <div class="move-panel__copy"><h3>FIND YOUR<br>NEXT CHALLENGE.</h3><p>Explore competitions, hackathons and opportunities waiting for builders.</p></div>
                 <span class="move-panel__cta">EXPLORE EVENTS <b aria-hidden="true">→</b></span>
               </a>
-              <a class="move-panel move-panel--collaborate" href="#community" data-preview="community">
+              <a class="move-panel move-panel--collaborate" href="#hackmate" data-route-link="hackmate">
                 <div class="move-panel__top mono"><span>02 / COLLABORATE</span><span class="move-panel__icon">↗</span></div>
                 <div class="move-panel__graphic move-panel__graphic--network" aria-hidden="true"><i></i><i></i><i></i><i></i><span></span></div>
                 <div class="move-panel__copy"><h3>BUILD WITH<br>PEOPLE WHO BUILD.</h3><p>Discover collaboration opportunities and connect with other students.</p></div>
                 <span class="move-panel__cta">EXPLORE COMMUNITY <b aria-hidden="true">→</b></span>
               </a>
-              <a class="move-panel move-panel--create" href="#ideacheck" data-preview="ideacheck">
+              <a class="move-panel move-panel--create" href="#ideacheck" data-route-link="ideacheck">
                 <div class="move-panel__top mono"><span>03 / CREATE</span><span class="move-panel__icon">↗</span></div>
                 <div class="move-panel__graphic move-panel__graphic--spark" aria-hidden="true"><span>✳</span><i></i><i></i></div>
                 <div class="move-panel__copy"><h3>PUT YOUR IDEA<br>TO THE TEST.</h3><p>Evaluate an early thought and get moving on your next project.</p></div>
@@ -212,7 +217,7 @@
                 <div class="journey__track-heading"><span class="mono">EVENT PROGRESS</span><span class="mono" data-journey-stage-label>STAGE 02 / 05 — PREPARATION</span></div>
                 <div class="journey-track" role="group" aria-label="ReBuild '26 event stages" data-journey-track></div>
                 <p class="journey__stage-detail" aria-live="polite" data-journey-stage-detail></p>
-                <a class="journey__link" href="#journey">VIEW MY EVENTS <span aria-hidden="true">→</span></a>
+                <a class="journey__link" href="#my-events" data-route-link="my-events">VIEW MY EVENTS <span aria-hidden="true">→</span></a>
               </div>
             </div>
             <p class="journey__mock-note mono">DEMONSTRATION JOURNEY — ONLY REGISTRATION IS COMPLETE. LATER STAGES ARE NOT YET REACHED.</p>
@@ -224,7 +229,7 @@
               <p>Pick a direction. The right challenge starts with a subject you can't stop thinking about.</p>
             </div>
             <div class="radar__layout">
-              <a class="radar-lead" href="#opportunities">
+              <a class="radar-lead" href="#events" data-route-link="events">
                 <span class="radar-lead__meta mono"><span data-radar-label="0">01 / ARTIFICIAL INTELLIGENCE</span><span>EXPLORE ↗</span></span>
                 <span class="radar-art radar-art--ai" aria-hidden="true"><i></i><i></i><i></i><b></b><span>AI</span></span>
                 <strong data-radar-title="0">Intelligence<br>with intention.</strong>
@@ -232,13 +237,13 @@
                 <span class="radar-lead__arrow" aria-hidden="true">↗</span>
               </a>
               <div class="radar__secondary">
-                <a class="radar-row radar-row--web" href="#opportunities">
+                <a class="radar-row radar-row--web" href="#events" data-route-link="events">
                   <span class="radar-row__number mono">02</span>
                   <span class="radar-art radar-art--web" aria-hidden="true"><i></i><i></i><i></i></span>
                   <span class="radar-row__content"><span class="mono" data-radar-label="1">WEB DEVELOPMENT</span><strong data-radar-title="1">Build for the open web.</strong><span data-radar-description="1">Design and ship thoughtful digital experiences.</span></span>
                   <span class="radar-row__arrow" aria-hidden="true">↗</span>
                 </a>
-                <a class="radar-row radar-row--smart" href="#opportunities">
+                <a class="radar-row radar-row--smart" href="#events" data-route-link="events">
                   <span class="radar-row__number mono">03</span>
                   <span class="radar-art radar-art--smart" aria-hidden="true"><i></i><i></i><i></i><b></b></span>
                   <span class="radar-row__content"><span class="mono" data-radar-label="2">SMART TECHNOLOGY</span><strong data-radar-title="2">Make the everyday smarter.</strong><span data-radar-description="2">Connect emerging tools to the world around you.</span></span>
@@ -264,11 +269,14 @@
             </div>
             <ol class="signals-list" data-activity></ol>
           </section>
+          </div>
+
+          <section class="route-page" id="route-page" data-route-view="page" aria-live="polite" hidden></section>
 
           <footer class="dashboard-footer">
             <a class="dashboard-footer__brand" href="../index.html">CAMPUSCODE<span>.</span></a>
             <p>BUILD. COMPETE. SHIP.</p>
-            <span class="dashboard-footer__status mono"><i></i> ALL SYSTEMS OPERATIONAL</span>
+            <span class="dashboard-footer__status mono"><i></i> DEMO MODE / LOCAL PREVIEW</span>
             <span class="dashboard-footer__year mono">© <span data-current-year>2026</span> CAMPUSCODE</span>
           </footer>
         </main>
@@ -276,13 +284,17 @@
     </div>
 
     <div class="dashboard-toast mono" role="status" aria-live="polite" data-toast></div>
-    <dialog class="preview-dialog" aria-labelledby="preview-title" data-preview-dialog>
-      <form method="dialog"><button class="preview-dialog__close" aria-label="Close preview">×</button></form>
-      <p class="eyebrow">CAMPUSCODE / SECTION PREVIEW</p>
-      <p class="preview-dialog__number mono" data-preview-number>PREVIEW / 00</p>
-      <h2 id="preview-title" data-preview-title>Coming into focus.</h2>
-      <p data-preview-description>This destination is not part of the current Overview preview.</p>
-      <div class="preview-dialog__footer mono"><span>OVERVIEW / ROUND 02</span><span>FRONTEND DEMO</span></div>
+    <dialog class="dashboard-dialog" aria-labelledby="dialog-title" data-dashboard-dialog>
+      <button class="dashboard-dialog__close" type="button" aria-label="Close dialog" data-dialog-close>×</button>
+      <p class="eyebrow">CAMPUSCODE / DEMONSTRATION</p>
+      <p class="dashboard-dialog__number mono">LOCAL PREVIEW / NO ACCOUNT SESSION</p>
+      <h2 id="dialog-title">Leave this workspace?</h2>
+      <p>Signing out will return to the Login page. This demo does not have a live account session.</p>
+      <div class="dashboard-dialog__actions">
+        <button class="dashboard-dialog__cancel" type="button" data-dialog-close>Stay here</button>
+        <a class="dashboard-dialog__confirm" href="../login.html">CONTINUE TO LOGIN <span aria-hidden="true">→</span></a>
+      </div>
     </dialog>
+    <span class="cursor-follower" data-cursor aria-hidden="true" hidden><i></i></span>
   </body>
 </html>

@@ -4,7 +4,7 @@ An editorial, frontend-only CampusCode landing page built with semantic HTML, CS
 
 ## Preview
 
-Open `index.html` directly or serve the project root with any static file server. Inter and DM Mono are loaded from Google Fonts; system fallbacks are included. Login and registration are visual frontend previews and do not connect to an authentication service.
+Open `index.html` directly or serve the project root with any static file server. Login and registration are visual frontend previews and do not connect to an authentication service.
 
 ## Page structure
 
@@ -21,6 +21,8 @@ The mobile menu, scroll reveals, hover/focus states, and decorative motion use n
 
 `register.html` uses the existing PNG icons in `assets/icons/` and its own `css/register.css` and `js/register.js`. The form validates profile fields, password requirements, confirmation, terms acceptance, and a five-digit demo CAPTCHA. Submission is a local mock only; it does not create an account or send personal information. This static project has no package manifest or production build command.
 
-## Student Overview
+## Student workspace
 
-`student/dashboard.html` is the frontend-only CampusCode student workspace overview. It uses `data/mockData.js` for demonstration identity, event, metric, toolkit, notification, and activity data; `css/dashboard.css` and `js/dashboard.js` keep the dashboard styling and interactions isolated from the public landing, login, and registration pages. Events and My Events navigate to Overview sections, while unfinished destinations open clearly labelled frontend previews. No account data, event listings, or AI tools are connected.
+`student/dashboard.html` is a frontend-only workspace with a shared sidebar, header, and hash routes: `#overview`, `#events`, `#my-events`, `#profile`, `#digital-id`, `#certificates`, `#hackmate`, `#ideacheck`, `#rulebot`, `#student-guide`, `#communications`, `#notifications`, and `#support`. Existing Overview section links such as `#journey` and `#opportunities` remain in-page anchors.
+
+The Overview is in `student/dashboard.html`; `css/dashboard.css` and `js/dashboard.js` provide the shared shell. `data/dashboardPagesData.js`, `js/dashboardPages.js`, and `css/dashboard-pages.css` provide page-specific examples, rendering, interactions, and layouts. Student identity, events, collaborators, certificates, announcements, and AI-adjacent tools are demonstration content. Profile edits, notification state, and event registrations can persist in browser local storage only. No account service, live event listing, AI model, or support endpoint is connected.
