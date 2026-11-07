@@ -20,3 +20,7 @@ The mobile menu, scroll reveals, hover/focus states, and decorative motion use n
 ## Registration
 
 `register.html` uses the existing PNG icons in `assets/icons/` and its own `css/register.css` and `js/register.js`. The form validates profile fields, password requirements, confirmation, terms acceptance, and a five-digit demo CAPTCHA. Submission is a local mock only; it does not create an account or send personal information. This static project has no package manifest or production build command.
+
+## Student Overview
+
+`student/dashboard.html` is the frontend-only CampusCode student workspace overview. It uses `data/mockData.js` for demonstration identity, event, metric, toolkit, notification, and activity data; `css/dashboard.css` and `js/dashboard.js` keep the dashboard styling and interactions isolated from the public landing, login, and registration pages. Events and My Events navigate to Overview sections, while unfinished destinations open clearly labelled frontend previews. No account data, event listings, or AI tools are connected.

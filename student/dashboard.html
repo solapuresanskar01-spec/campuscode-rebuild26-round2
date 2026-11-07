@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f7f7f4">
+    <meta name="description" content="CampusCode student workspace overview. Find your next build, event and opportunity.">
+    <title>Overview — CampusCode Student Workspace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <script src="../data/mockData.js" defer></script>
+    <script src="../js/dashboard.js" defer></script>
+  </head>
+  <body class="dashboard-page">
+    <a class="skip-link" href="#dashboard-main">Skip to overview</a>
+    <div class="dashboard-shell">
+      <button class="sidebar-scrim" type="button" aria-label="Close navigation" data-sidebar-scrim hidden></button>
+      <aside class="sidebar" id="student-sidebar" aria-label="Student workspace navigation">
+        <div class="sidebar__top">
+          <a class="sidebar__brand" href="../index.html" aria-label="CampusCode home">
+            <img src="../assets/images/campuscode-logo.png" alt="CampusCode">
+          </a>
+          <div class="sidebar__workspace mono"><span class="sidebar__workspace-dot"></span> STUDENT WORKSPACE</div>
+          <button class="sidebar__close" type="button" aria-label="Close navigation" data-sidebar-close>×</button>
+        </div>
+
+        <nav class="sidebar-nav" aria-label="Dashboard sections">
+          <p class="sidebar-nav__label mono">WORKSPACE</p>
+          <a class="sidebar-link is-active" href="#overview" aria-current="page" data-nav-link data-section="overview">
+            <img src="../assets/icons/layout-dashboard.png" alt=""><span>Overview</span><span class="sidebar-link__number mono">01</span>
+          </a>
+          <a class="sidebar-link" href="#opportunities" data-nav-link data-section="events">
+            <img src="../assets/icons/calendar-days.png" alt=""><span>Events</span><span class="sidebar-link__number mono">02</span>
+          </a>
+          <a class="sidebar-link" href="#journey" data-nav-link data-section="my-events">
+            <img src="../assets/icons/trophy.png" alt=""><span>My Events</span><span class="sidebar-link__number mono">03</span>
+          </a>
+          <a class="sidebar-link" href="#hackmate" data-nav-link data-preview="hackmate">
+            <img src="../assets/icons/bot.png" alt=""><span>HackMate AI</span><span class="sidebar-link__number mono">04</span>
+          </a>
+          <a class="sidebar-link" href="#ideacheck" data-nav-link data-preview="ideacheck">
+            <img src="../assets/icons/lightbulb.png" alt=""><span>IdeaCheck AI</span><span class="sidebar-link__number mono">05</span>
+          </a>
+          <a class="sidebar-link" href="#certificates" data-nav-link data-preview="certificates">
+            <img src="../assets/icons/certificate.png" alt=""><span>Certificates</span><span class="sidebar-link__number mono">06</span>
+          </a>
+          <a class="sidebar-link" href="#digital-id" data-nav-link data-preview="digital-id">
+            <img src="../assets/icons/qr-code.png" alt=""><span>Digital ID</span><span class="sidebar-link__number mono">07</span>
+          </a>
+          <a class="sidebar-link" href="#rulebot" data-nav-link data-preview="rulebot">
+            <img src="../assets/icons/circle-question-mark.png" alt=""><span>RuleBot AI</span><span class="sidebar-link__number mono">08</span>
+          </a>
+          <a class="sidebar-link" href="#student-guide" data-nav-link data-preview="student-guide">
+            <img src="../assets/icons/book-open.png" alt=""><span>Student Guide</span><span class="sidebar-link__number mono">09</span>
+          </a>
+
+          <p class="sidebar-nav__label sidebar-nav__label--second mono">CAMPUSCODE</p>
+          <a class="sidebar-link" href="#communication" data-nav-link data-preview="communication">
+            <img src="../assets/icons/megaphone.png" alt=""><span>Official Communication</span><span class="sidebar-link__number mono">10</span>
+          </a>
+          <button class="sidebar-link sidebar-link--button" type="button" data-open-notifications>
+            <img src="../assets/icons/bell.png" alt=""><span>Notifications</span><span class="sidebar-link__number mono">11</span>
+            <span class="sidebar-link__badge" data-sidebar-notification-count>03</span>
+          </button>
+          <a class="sidebar-link" href="#support" data-nav-link data-preview="support">
+            <img src="../assets/icons/circle-question-mark.png" alt=""><span>Help &amp; Support</span><span class="sidebar-link__number mono">12</span>
+          </a>
+          <a class="sidebar-link" href="#profile" data-nav-link data-preview="profile">
+            <img src="../assets/icons/square-user-round.png" alt=""><span>Profile</span><span class="sidebar-link__number mono">13</span>
+          </a>
+        </nav>
+
+        <div class="sidebar__account">
+          <a class="sidebar-account" href="#profile" data-preview="profile">
+            <span class="avatar avatar--sidebar" data-student-initials>SS</span>
+            <span class="sidebar-account__copy"><strong data-student-name>Sanskar Solapure</strong><span class="mono">STUDENT</span></span>
+            <img class="sidebar-account__menu" src="../assets/icons/ellipsis.png" alt="">
+          </a>
+          <a class="sidebar-logout" href="../login.html">
+            <img src="../assets/icons/log-out.png" alt=""><span>Log out</span>
+          </a>
+        </div>
+      </aside>
+
+      <div class="dashboard-main">
+        <header class="topbar">
+          <button class="topbar__menu" type="button" aria-label="Open navigation" aria-controls="student-sidebar" aria-expanded="false" data-sidebar-toggle>
+            <img src="../assets/icons/menu.png" alt="">
+          </button>
+          <div class="topbar__context">
+            <p class="topbar__crumb mono">CAMPUSCODE <span>/</span> STUDENT</p>
+            <p class="topbar__title">OVERVIEW</p>
+          </div>
+          <div class="topbar__actions">
+            <div class="notification-wrap">
+              <button class="icon-button notification-trigger" type="button" aria-label="Open notifications" aria-expanded="false" aria-controls="notification-panel" data-open-notifications>
+                <img src="../assets/icons/bell.png" alt="">
+                <span class="notification-trigger__count" data-notification-count>3</span>
+              </button>
+              <section class="notification-panel" id="notification-panel" aria-label="Notifications" hidden>
+                <div class="notification-panel__header">
+                  <div><p class="mono">INBOX / MOCK SIGNALS</p><h2>Notifications</h2></div>
+                  <button class="notification-panel__mark" type="button" data-mark-notifications>Mark all read</button>
+                </div>
+                <div class="notification-list" data-notification-list></div>
+                <p class="notification-panel__note mono">DEMO NOTIFICATIONS — NO LIVE ACCOUNT</p>
+              </section>
+            </div>
+            <button class="icon-button refresh-button" type="button" aria-label="Refresh workspace" data-refresh>
+              <img src="../assets/icons/refresh-cw.png" alt="">
+            </button>
+            <span class="topbar__divider" aria-hidden="true"></span>
+            <button class="topbar-profile" type="button" data-preview="profile" aria-label="Open student profile preview">
+              <span class="avatar avatar--top" data-student-initials>SS</span>
+              <span class="topbar-profile__name" data-student-name>Sanskar Solapure</span>
+              <img src="../assets/icons/square-chevron-down.png" alt="">
+            </button>
+          </div>
+        </header>
+
+        <main class="overview" id="dashboard-main">
+          <div class="overview__meta mono">
+            <span>YOUR WORKSPACE / <span data-workspace-year>2026</span></span>
+            <span class="overview__mock-label"><i></i> MOCK DATA / PREVIEW</span>
+          </div>
+
+          <section class="welcome-hero" id="overview" aria-labelledby="welcome-title">
+            <div class="welcome-hero__copy">
+              <p class="eyebrow welcome-hero__eyebrow">WELCOME BACK, <span data-first-name>SANSKAR</span>.</p>
+              <h1 id="welcome-title">MAKE<br>SOMETHING<br><span>MATTER.</span></h1>
+              <p class="welcome-hero__description">Your next build starts here. Discover opportunities, challenge your thinking and turn ideas into things people can use.</p>
+              <div class="welcome-hero__status">
+                <span class="build-status"><i></i><span>STATUS: <strong data-workspace-status>READY TO BUILD</strong></span></span>
+                <a class="welcome-hero__jump" href="#next-move">FIND YOUR NEXT MOVE <span aria-hidden="true">↘</span></a>
+              </div>
+            </div>
+
+            <div class="build-orbit" role="img" aria-label="The Build Orbit: discover, build and compete">
+              <p class="build-orbit__heading mono">THE BUILD ORBIT <span>FIG. 01</span></p>
+              <div class="build-orbit__visual">
+                <div class="build-orbit__axis build-orbit__axis--horizontal"></div>
+                <div class="build-orbit__axis build-orbit__axis--vertical"></div>
+                <div class="build-orbit__path build-orbit__path--outer"><i></i></div>
+                <div class="build-orbit__path build-orbit__path--middle"><i></i></div>
+                <div class="build-orbit__path build-orbit__path--inner"><i></i></div>
+                <span class="build-orbit__node build-orbit__node--discover mono">DISCOVER</span>
+                <span class="build-orbit__node build-orbit__node--build mono">BUILD</span>
+                <span class="build-orbit__node build-orbit__node--compete mono">COMPETE</span>
+                <div class="build-orbit__core"><span>MAKE</span><strong>IT<br>MATTER</strong></div>
+                <span class="build-orbit__cross build-orbit__cross--one"></span>
+                <span class="build-orbit__cross build-orbit__cross--two"></span>
+              </div>
+              <p class="build-orbit__caption mono"><span>01 — 03</span> EVERY IDEA STARTS SOMEWHERE.</p>
+            </div>
+            <span class="welcome-hero__index mono" aria-hidden="true">CC / 026</span>
+          </section>
+
+          <section class="builder-status" aria-labelledby="builder-status-title">
+            <div class="section-kicker">
+              <div><p class="eyebrow">A QUICK READ ON YOUR WORK</p><h2 id="builder-status-title">YOUR BUILDER STATUS</h2></div>
+              <span class="mono">01 — THE SNAPSHOT</span>
+            </div>
+            <div class="metric-strip" data-metrics></div>
+          </section>
+
+          <section class="next-move" id="next-move" aria-labelledby="next-move-title">
+            <div class="section-kicker section-kicker--move">
+              <div><p class="eyebrow">THREE WAYS TO GET IN MOTION</p><h2 id="next-move-title">WHAT'S YOUR NEXT MOVE?</h2></div>
+              <span class="mono">02 — CHOOSE A DIRECTION</span>
+            </div>
+            <div class="move-layout">
+              <a class="move-panel move-panel--discover" href="#opportunities">
+                <div class="move-panel__top mono"><span>01 / DISCOVER</span><span class="move-panel__icon">↗</span></div>
+                <div class="move-panel__graphic move-panel__graphic--radar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
+                <div class="move-panel__copy"><h3>FIND YOUR<br>NEXT CHALLENGE.</h3><p>Explore competitions, hackathons and opportunities waiting for builders.</p></div>
+                <span class="move-panel__cta">EXPLORE EVENTS <b aria-hidden="true">→</b></span>
+              </a>
+              <a class="move-panel move-panel--collaborate" href="#community" data-preview="community">
+                <div class="move-panel__top mono"><span>02 / COLLABORATE</span><span class="move-panel__icon">↗</span></div>
+                <div class="move-panel__graphic move-panel__graphic--network" aria-hidden="true"><i></i><i></i><i></i><i></i><span></span></div>
+                <div class="move-panel__copy"><h3>BUILD WITH<br>PEOPLE WHO BUILD.</h3><p>Discover collaboration opportunities and connect with other students.</p></div>
+                <span class="move-panel__cta">EXPLORE COMMUNITY <b aria-hidden="true">→</b></span>
+              </a>
+              <a class="move-panel move-panel--create" href="#ideacheck" data-preview="ideacheck">
+                <div class="move-panel__top mono"><span>03 / CREATE</span><span class="move-panel__icon">↗</span></div>
+                <div class="move-panel__graphic move-panel__graphic--spark" aria-hidden="true"><span>✳</span><i></i><i></i></div>
+                <div class="move-panel__copy"><h3>PUT YOUR IDEA<br>TO THE TEST.</h3><p>Evaluate an early thought and get moving on your next project.</p></div>
+                <span class="move-panel__cta">OPEN IDEACHECK <b aria-hidden="true">→</b></span>
+              </a>
+            </div>
+          </section>
+
+          <section class="journey" id="journey" aria-labelledby="journey-title">
+            <div class="journey__header">
+              <div><p class="eyebrow">03 — THE WORK IN PROGRESS</p><h2 id="journey-title">YOUR CURRENT JOURNEY</h2></div>
+              <span class="journey__event-status"><i></i><span class="mono" data-journey-event-status>ACTIVE / MOCK</span></span>
+            </div>
+            <div class="journey__body">
+              <div class="journey__event">
+                <span class="journey__event-mark mono">CURRENT EVENT / 01</span>
+                <h3 data-journey-event-name>ReBuild '26</h3>
+                <div class="journey__details">
+                  <p><span class="mono">REGISTRATION</span><strong data-journey-registration>REGISTERED</strong></p>
+                  <p><span class="mono">PARTICIPATION</span><strong data-journey-participation>INDIVIDUAL</strong></p>
+                  <p><span class="mono">TRACKING TEAM</span><strong data-journey-team>quantum coder</strong></p>
+                </div>
+              </div>
+              <div class="journey__track-wrap">
+                <div class="journey__track-heading"><span class="mono">EVENT PROGRESS</span><span class="mono" data-journey-stage-label>STAGE 02 / 05 — PREPARATION</span></div>
+                <div class="journey-track" role="group" aria-label="ReBuild '26 event stages" data-journey-track></div>
+                <p class="journey__stage-detail" aria-live="polite" data-journey-stage-detail></p>
+                <a class="journey__link" href="#journey">VIEW MY EVENTS <span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+            <p class="journey__mock-note mono">DEMONSTRATION JOURNEY — ONLY REGISTRATION IS COMPLETE. LATER STAGES ARE NOT YET REACHED.</p>
+          </section>
+
+          <section class="radar" id="opportunities" aria-labelledby="radar-title">
+            <div class="radar__heading">
+              <div><p class="eyebrow">04 — OPEN FIELDS, NEW QUESTIONS</p><h2 id="radar-title">ON YOUR RADAR<span>.</span></h2></div>
+              <p>Pick a direction. The right challenge starts with a subject you can't stop thinking about.</p>
+            </div>
+            <div class="radar__layout">
+              <a class="radar-lead" href="#opportunities">
+                <span class="radar-lead__meta mono"><span data-radar-label="0">01 / ARTIFICIAL INTELLIGENCE</span><span>EXPLORE ↗</span></span>
+                <span class="radar-art radar-art--ai" aria-hidden="true"><i></i><i></i><i></i><b></b><span>AI</span></span>
+                <strong data-radar-title="0">Intelligence<br>with intention.</strong>
+                <span class="radar-lead__description" data-radar-description="0">Explore challenges where machine intelligence meets meaningful problems.</span>
+                <span class="radar-lead__arrow" aria-hidden="true">↗</span>
+              </a>
+              <div class="radar__secondary">
+                <a class="radar-row radar-row--web" href="#opportunities">
+                  <span class="radar-row__number mono">02</span>
+                  <span class="radar-art radar-art--web" aria-hidden="true"><i></i><i></i><i></i></span>
+                  <span class="radar-row__content"><span class="mono" data-radar-label="1">WEB DEVELOPMENT</span><strong data-radar-title="1">Build for the open web.</strong><span data-radar-description="1">Design and ship thoughtful digital experiences.</span></span>
+                  <span class="radar-row__arrow" aria-hidden="true">↗</span>
+                </a>
+                <a class="radar-row radar-row--smart" href="#opportunities">
+                  <span class="radar-row__number mono">03</span>
+                  <span class="radar-art radar-art--smart" aria-hidden="true"><i></i><i></i><i></i><b></b></span>
+                  <span class="radar-row__content"><span class="mono" data-radar-label="2">SMART TECHNOLOGY</span><strong data-radar-title="2">Make the everyday smarter.</strong><span data-radar-description="2">Connect emerging tools to the world around you.</span></span>
+                  <span class="radar-row__arrow" aria-hidden="true">↗</span>
+                </a>
+              </div>
+            </div>
+            <div class="radar__scan" aria-hidden="true"></div>
+          </section>
+
+          <section class="toolkit" id="toolkit" aria-labelledby="toolkit-title">
+            <div class="toolkit__header">
+              <div><p class="eyebrow">05 — USEFUL THINGS, CLOSE BY</p><h2 id="toolkit-title">YOUR TOOLKIT</h2></div>
+              <span class="mono">TOOLS SHOWN AS FRONTEND PREVIEWS</span>
+            </div>
+            <div class="toolkit-grid" data-toolkit></div>
+          </section>
+
+          <section class="signals" aria-labelledby="signals-title">
+            <div class="signals__heading">
+              <div><p class="eyebrow">06 — A SMALL TRACE OF WHAT'S MOVING</p><h2 id="signals-title">RECENT SIGNALS</h2></div>
+              <span class="signals__mock mono"><i></i> MOCK ACTIVITY / PREVIEW DATA</span>
+            </div>
+            <ol class="signals-list" data-activity></ol>
+          </section>
+
+          <footer class="dashboard-footer">
+            <a class="dashboard-footer__brand" href="../index.html">CAMPUSCODE<span>.</span></a>
+            <p>BUILD. COMPETE. SHIP.</p>
+            <span class="dashboard-footer__status mono"><i></i> ALL SYSTEMS OPERATIONAL</span>
+            <span class="dashboard-footer__year mono">© <span data-current-year>2026</span> CAMPUSCODE</span>
+          </footer>
+        </main>
+      </div>
+    </div>
+
+    <div class="dashboard-toast mono" role="status" aria-live="polite" data-toast></div>
+    <dialog class="preview-dialog" aria-labelledby="preview-title" data-preview-dialog>
+      <form method="dialog"><button class="preview-dialog__close" aria-label="Close preview">×</button></form>
+      <p class="eyebrow">CAMPUSCODE / SECTION PREVIEW</p>
+      <p class="preview-dialog__number mono" data-preview-number>PREVIEW / 00</p>
+      <h2 id="preview-title" data-preview-title>Coming into focus.</h2>
+      <p data-preview-description>This destination is not part of the current Overview preview.</p>
+      <div class="preview-dialog__footer mono"><span>OVERVIEW / ROUND 02</span><span>FRONTEND DEMO</span></div>
+    </dialog>
+  </body>
+</html>
